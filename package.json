@@ -1,0 +1,23 @@
+{
+  "name": "@felixfever/dwarl",
+  "version": "1.0.0",
+  "description": "Front end library for Dwarl Drupal module.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Felix Fever <felix@felixeve.co.uk>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dahousecat/dwarl.git"
+  },
+  "keywords": [
+    "webauthn",
+    "drupal"
+  ],
+  "bugs": {
+    "url": "https://github.com/dahousecat/dwarl/issues"
+  },
+  "homepage": "https://github.com/dahousecat/dwarl#readme"
+}
