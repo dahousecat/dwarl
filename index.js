@@ -1,5 +1,5 @@
-function helloNpm() {
-  return "hello NPM"
+export class dwarl {
+  static test() {
+    return "dwarl test"
+  }
 }
-
-module.exports = helloNpm
