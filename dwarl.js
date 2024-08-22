@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { startAuthentication, startRegistration } from "@simplewebauthn/browser";
+import { startRegistration } from "@simplewebauthn/browser";
 
 export default class dwarl {
   baseUrl = ''
