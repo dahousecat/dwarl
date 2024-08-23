@@ -5,6 +5,7 @@ export default class dwarl {
   baseUrl = ''
   verifyContactToken = ''
   setAuthToken = ''
+  accessToken = ''
 
   constructor({ baseUrl }) {
     this.baseUrl = baseUrl
@@ -72,7 +73,22 @@ export default class dwarl {
       { attestation },
       this.setAuthToken
     )
+    if (typeof data.token !== 'string') {
+      console.error('token missing from register device response')
+    }
+    this.accessToken = data.token
+    return data.data
+  }
+
+  async listPasskeys() {
+    const path = '/dwarl/passkey/list'
+    const data = await this.request(
+      path,
+      null,
+      this.accessToken
+    )
     console.log(data, 'data')
+    return data
   }
 
   /**
