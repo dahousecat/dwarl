@@ -43,7 +43,9 @@ export default class dwarl {
     console.log(optionsJson, 'optionsJson')
     const attestation = await this.generateAttestation(optionsJson)
     console.log(attestation, 'attestation')
-    await this.registerDevice(attestation)
+    if (attestation) {
+      await this.registerDevice(attestation)
+    }
   }
 
   async registerDeviceOptions() {
