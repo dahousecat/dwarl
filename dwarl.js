@@ -97,16 +97,13 @@ export default class warl {
   async login(user_handle) {
     const options_json = await this.requestOptions(user_handle)
     console.log(options_json, 'options_json')
-
     console.log(this.lastResponse, 'lastResponse')
 
-    const session_id = this.lastResponse.session_id
-    console.log(session_id, 'session_id')
-
-
-    // const authentication_request = JSON.stringify(await startAuthentication(options_json))
+    // let authentication_request = await startAuthentication(options_json)
     // console.log(authentication_request, 'authentication_request')
-    // const auth_response = await this.authenticateRequest(user_handle, authentication_request)
+    // authentication_request = JSON.stringify(authentication_request)
+    // console.log(authentication_request, 'authentication_request stringified')
+    // const auth_response = await this.authenticateRequest(user_handle, authentication_request, session_id)
     // console.log(auth_response, 'auth_response')
   }
 
@@ -116,9 +113,9 @@ export default class warl {
     return data.data
   }
 
-  async authenticateRequest(user_handle, authentication_request) {
+  async authenticateRequest(user_handle, authentication_request, session_id) {
     const path = '/dwarl/authenticate-request'
-    const data = await this.request(path, { user_handle, authentication_request }, null)
+    const data = await this.request(path, { user_handle, authentication_request, session_id }, null)
     return data.data
   }
 
