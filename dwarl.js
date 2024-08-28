@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { startAuthentication, startRegistration } from "@simplewebauthn/browser";
 
-export default class dwarl {
+export default class warl {
   baseUrl = ''
   verifyContactToken = ''
   setAuthToken = ''
   accessToken = ''
+  lastResponse = null
 
   constructor({ baseUrl }) {
     this.baseUrl = baseUrl
@@ -80,7 +81,6 @@ export default class dwarl {
     }
     this.accessToken = data.token
     return data.data
-    // test change
   }
 
   async listPasskeys() {
@@ -92,6 +92,29 @@ export default class dwarl {
     )
     console.log(data, 'data')
     return data
+  }
+
+  async login(user_handle) {
+    const options_json = await this.requestOptions(user_handle)
+    console.log(options_json, 'options_json')
+    console.log(this.lastResponse, 'lastResponse')
+
+    // const authentication_request = JSON.stringify(await startAuthentication(options_json))
+    // console.log(authentication_request, 'authentication_request')
+    // const auth_response = await this.authenticateRequest(user_handle, authentication_request)
+    // console.log(auth_response, 'auth_response')
+  }
+
+  async requestOptions(user_handle) {
+    const path = '/dwarl/request-options'
+    const data = await this.request(path, { user_handle }, null)
+    return data.data
+  }
+
+  async authenticateRequest(user_handle, authentication_request) {
+    const path = '/dwarl/authenticate-request'
+    const data = await this.request(path, { user_handle, authentication_request }, null)
+    return data.data
   }
 
   /**
@@ -140,6 +163,8 @@ export default class dwarl {
     }
 
     console.log(response, 'response')
+
+    this.lastResponse = response
 
     return response.data
   }
