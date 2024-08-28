@@ -97,14 +97,18 @@ export default class warl {
   async login(user_handle) {
     const options_json = await this.requestOptions(user_handle)
     console.log(options_json, 'options_json')
-    console.log(this.lastResponse, 'lastResponse')
+    // console.log(this.lastResponse, 'lastResponse')
 
-    // let authentication_request = await startAuthentication(options_json)
-    // console.log(authentication_request, 'authentication_request')
-    // authentication_request = JSON.stringify(authentication_request)
-    // console.log(authentication_request, 'authentication_request stringified')
-    // const auth_response = await this.authenticateRequest(user_handle, authentication_request, session_id)
-    // console.log(auth_response, 'auth_response')
+    const session_id = this.lastResponse.headers['session-id']
+    console.log(session_id, 'session_id')
+
+    let authentication_request = await startAuthentication(options_json)
+    console.log(authentication_request, 'authentication_request')
+    authentication_request = JSON.stringify(authentication_request)
+    console.log(authentication_request, 'authentication_request stringified')
+
+    const auth_response = await this.authenticateRequest(user_handle, authentication_request, session_id)
+    console.log(auth_response, 'auth_response')
   }
 
   async requestOptions(user_handle) {
@@ -115,7 +119,11 @@ export default class warl {
 
   async authenticateRequest(user_handle, authentication_request, session_id) {
     const path = '/dwarl/authenticate-request'
-    const data = await this.request(path, { user_handle, authentication_request, session_id }, null)
+    const data = await this.request(
+      path,
+      { user_handle, authentication_request },
+      null,
+      session_id)
     return data.data
   }
 
@@ -125,9 +133,10 @@ export default class warl {
    * @param path
    * @param params
    * @param token
+   * @param sessionId
    * @returns {Promise<any|boolean>}
    */
-  async request(path, params, token) {
+  async request(path, params, token = null, sessionId = null) {
     const url = this.baseUrl + path
 
     const options = {
@@ -139,6 +148,10 @@ export default class warl {
     if (token) {
       options.headers['Authorization'] = 'Bearer ' + token
       options.headers['Access-Control-Allow-Headers'] = 'Authorization'
+    }
+
+    if (sessionId) {
+      options.headers['session-id'] = sessionId
     }
 
     console.log({ url, params, options }, 'request')
