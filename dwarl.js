@@ -123,7 +123,8 @@ export default class warl {
       path,
       { user_handle, authentication_request },
       null,
-      session_id)
+      session_id
+    )
     return data.data
   }
 
