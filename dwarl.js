@@ -106,7 +106,9 @@ export default class warl {
   async login(user_handle) {
     const options_json = await this.requestOptions(user_handle)
     console.log(options_json, 'options_json')
-    // console.log(this.lastResponse, 'lastResponse')
+    console.log(this.lastResponse, 'lastResponse')
+
+    return
 
     const session_id = this.lastResponse.headers['session-id']
     console.log(session_id, 'session_id')
