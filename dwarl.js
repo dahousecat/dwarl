@@ -4,7 +4,6 @@ import { startAuthentication, startRegistration } from "@simplewebauthn/browser"
 export default class warl {
   baseUrl = ''
   sessionId = null
-  verifyContactToken = ''
   setAuthToken = ''
   accessToken = ''
   lastResponse = null
@@ -15,19 +14,11 @@ export default class warl {
   }
 
   async registerEmail(email) {
-    // const path = '/dwarl/register/email'
-    // const data = await this.request(path, { email })
-    // if (typeof data.token === 'undefined') {
-    //   console.error('token missing from register email response')
-    //   return false
-    // }
-    // this.verifyContactToken = data.token
-    // return true
     const path = '/dwarl/register/email'
     await this.request(path, { email })
 
     this.sessionId = this.lastResponse.headers['session-id']
-    console.log(this.sessionId, 'session_id')
+    console.log('set session_id ' + this.sessionId)
 
     return true
   }
@@ -63,7 +54,8 @@ export default class warl {
     const data = await this.request(
       path,
       null,
-      this.setAuthToken
+      null,
+      this.sessionId
     )
     return data.data
   }
@@ -83,7 +75,8 @@ export default class warl {
     const data = await this.request(
       path,
       { attestation },
-      this.setAuthToken
+      null,
+      this.sessionId
     )
     if (typeof data.token !== 'string') {
       console.error('token missing from register device response')
