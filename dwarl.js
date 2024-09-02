@@ -63,7 +63,8 @@ export default class warl {
     const data = await this.request(
       path,
       null,
-      this.setAuthToken
+      null,
+      this.sessionId
     )
     return data.data
   }
@@ -83,7 +84,8 @@ export default class warl {
     const data = await this.request(
       path,
       { attestation },
-      this.setAuthToken
+      null,
+      this.sessionId
     )
     if (typeof data.token !== 'string') {
       console.error('token missing from register device response')
