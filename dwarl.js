@@ -264,6 +264,11 @@ export default class Dwarl {
     this.sessionId = this.lastResponse.headers['session-id']
   }
 
+  async registerPasswordWithOtp(password, otp) {
+    const path = '/dwarl/registration/set-password'
+    await this.request(path, { password, otp }, null, this.sessionId)
+  }
+
   async setPasswordWithOtp(password, otp) {
     const path = '/dwarl/set-password-otp'
     await this.request(path, { password, otp }, this.jwtToken)
