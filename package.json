@@ -1,6 +1,6 @@
 {
   "name": "@felixfever/dwarl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Front end library for Dwarl Drupal module.",
   "main": "dwarl.js",
   "scripts": {
